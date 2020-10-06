@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import Proptypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import api from '../../services/api';
-import { Loading } from './styles';
+
+import Container from '../../components/container/styles';
+import { Loading, Owner, IssueList } from './styles';
+
 export default class Repository extends Component {
   static propTypes = {
     match: Proptypes.shape({
@@ -45,6 +49,33 @@ export default class Repository extends Component {
     if (loading) {
       return <Loading>Carregando...</Loading>;
     }
-    return <h1>Repository: </h1>;
+    return (
+      <Container>
+        <Owner>
+          <Link to="/">Voltar aos repositórios</Link>
+          <img
+            src={repository.owner.avatar_url}
+            alt="{repository.owner.login}"
+          />
+          <h1>{repository.name}</h1>
+          <h1>{repository.description}</h1>
+        </Owner>
+
+        <IssueList>
+          {issues.map((issue) => (
+            <li key={String(issue.id)}>
+              <img src={issue.user.avatar_url} alt={issue.user.login} />
+              <div>
+                <strong>
+                  <a href={issue.html_url}>{issue.title}</a>
+                  {/**labels */}
+                </strong>
+                <p>{issue.user.login}</p>
+              </div>
+            </li>
+          ))}
+        </IssueList>
+      </Container>
+    );
   }
 }
