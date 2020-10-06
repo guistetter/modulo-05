@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-function Repository({ match }) {
-  return <h1>Repository: {decodeURIComponent(match.params.repository)} </h1>;
+export default class Repository extends Component {
+  async componentDidMount() {
+    const { match } = this.props;
+    const repoName = decodeURIComponent(match.params.repository);
+  }
+
+  render() {
+    return <h1>Repository: </h1>;
+  }
 }
-
-export default Repository;
